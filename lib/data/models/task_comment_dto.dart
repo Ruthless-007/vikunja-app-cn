@@ -20,14 +20,14 @@ class TaskCommentDto extends Dto<TaskComment> {
 
   TaskCommentDto.fromJson(Map<String, dynamic> json)
     : id = json['id'] as int,
-      comment = json['comment'] ?? '',
+      comment = json['评论'] ?? '',
       author = UserDto.fromJson(json['author']),
       created = DateTime.parse(json['created']),
       updated = DateTime.parse(json['updated']);
 
   Map<String, dynamic> toJSON() => {
     'id': id,
-    'comment': comment,
+    '评论': comment,
     'author': author.toJSON(),
     'created': created.toUtc().toIso8601String(),
     'updated': updated.toUtc().toIso8601String(),

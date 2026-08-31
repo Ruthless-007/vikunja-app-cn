@@ -168,18 +168,18 @@ class TaskComments extends ConsumerWidget {
                 if (isOwner)
                   PopupMenuButton<String>(
                     onSelected: (value) {
-                      if (value == 'edit') {
+                      if (value == '编辑') {
                         _navigateToEditPage(context, taskId, comment);
-                      } else if (value == 'delete') {
+                      } else if (value == '删除') {
                         _deleteComment(context, ref, taskId, comment);
                       }
                     },
                     itemBuilder: (context) {
                       final l10n = AppLocalizations.of(context);
                       return [
-                        PopupMenuItem(value: 'edit', child: Text(l10n.edit)),
+                        PopupMenuItem(value: '编辑', child: Text(l10n.edit)),
                         PopupMenuItem(
-                          value: 'delete',
+                          value: '删除',
                           child: Text(l10n.delete),
                         ),
                       ];

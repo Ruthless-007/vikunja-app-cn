@@ -105,8 +105,8 @@ class UserDto extends Dto<User> {
       username = json['username'],
       created = DateTime.parse(json['created']),
       updated = DateTime.parse(json['updated']) {
-    if (json.containsKey('settings')) {
-      settings = UserSettingsDto.fromJson(json['settings']);
+    if (json.containsKey('设置')) {
+      settings = UserSettingsDto.fromJson(json['设置']);
     }
   }
 

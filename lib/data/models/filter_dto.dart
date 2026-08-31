@@ -28,14 +28,14 @@ class FilterDto extends Dto<Filter> {
           : (json['order_by'] as List<dynamic>)
                 .map((e) => e.toString())
                 .toList(),
-      filter = json['filter'],
+      filter = json['筛选'],
       filterIncludesNulls = json['filter_include_nulls'];
 
   Map<String, dynamic> toJSON() => {
     's': s,
     'sortBy': sortBy,
     'orderBy': orderBy,
-    'filter': filter,
+    '筛选': filter,
     'filterIncludesNulls': filterIncludesNulls,
   };
 

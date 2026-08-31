@@ -54,12 +54,12 @@ class TaskDto extends Dto<Task> {
 
   TaskDto.fromJson(Map<String, dynamic> json)
     : id = json['id'],
-      title = json['title'],
-      description = json['description'],
+      title = json['标题'],
+      description = json['描述'],
       identifier = json['identifier'],
-      done = json['done'],
-      reminderDates = json['reminders'] != null
-          ? (json['reminders'] as List<dynamic>)
+      done = json['完成'],
+      reminderDates = json['提醒事项'] != null
+          ? (json['提醒事项'] as List<dynamic>)
                 .map((ts) => TaskReminderDto.fromJson(ts))
                 .toList()
           : [],
@@ -67,7 +67,7 @@ class TaskDto extends Dto<Task> {
       startDate = DateTime.parse(json['start_date']),
       endDate = DateTime.parse(json['end_date']),
       parentTaskId = json['parent_task_id'],
-      priority = json['priority'],
+      priority = json['优先级'],
       repeatAfter = Duration(seconds: json['repeat_after']),
       color = json['hex_color'] != ''
           ? Color(int.parse(json['hex_color'], radix: 16) + 0xFF000000)
@@ -78,18 +78,18 @@ class TaskDto extends Dto<Task> {
       percentDone = json['percent_done'] is int
           ? json['percent_done'].toDouble()
           : json['percent_done'],
-      labels = json['labels'] != null
-          ? (json['labels'] as List<dynamic>)
+      labels = json['标签'] != null
+          ? (json['标签'] as List<dynamic>)
                 .map((label) => LabelDto.fromJson(label))
                 .toList()
           : [],
-      subtasks = json['subtasks'] != null
-          ? (json['subtasks'] as List<dynamic>)
+      subtasks = json['子任务'] != null
+          ? (json['子任务'] as List<dynamic>)
                 .map((subtask) => TaskDto.fromJson(subtask))
                 .toList()
           : [],
-      attachments = json['attachments'] != null
-          ? (json['attachments'] as List<dynamic>)
+      attachments = json['附件'] != null
+          ? (json['附件'] as List<dynamic>)
                 .map((attachment) => TaskAttachmentDto.fromJSON(attachment))
                 .toList()
           : [],
@@ -103,15 +103,15 @@ class TaskDto extends Dto<Task> {
 
   Map<String, Object?> toJSON() => {
     'id': id,
-    'title': title,
-    'description': description,
+    '标题': title,
+    '描述': description,
     'identifier': identifier.isNotEmpty ? identifier : null,
-    'done': done,
-    'reminders': reminderDates.map((date) => date.toJSON()).toList(),
+    '完成': done,
+    '提醒事项': reminderDates.map((date) => date.toJSON()).toList(),
     'due_date': dueDate?.toUtc().toIso8601String(),
     'start_date': startDate?.toUtc().toIso8601String(),
     'end_date': endDate?.toUtc().toIso8601String(),
-    'priority': priority,
+    '优先级': priority,
     'repeat_after': repeatAfter?.inSeconds,
     'hex_color': color
         ?.toARGB32()
@@ -121,9 +121,9 @@ class TaskDto extends Dto<Task> {
     'position': position,
     'percent_done': percentDone,
     'project_id': projectId,
-    'labels': labels.map((label) => label.toJSON()).toList(),
-    'subtasks': subtasks.map((subtask) => subtask.toJSON()).toList(),
-    'attachments': attachments
+    '标签': labels.map((label) => label.toJSON()).toList(),
+    '子任务': subtasks.map((subtask) => subtask.toJSON()).toList(),
+    '附件': attachments
         .map((attachment) => attachment.toJSON())
         .toList(),
     'bucket_id': bucketId,

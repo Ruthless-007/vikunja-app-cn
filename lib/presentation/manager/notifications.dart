@@ -75,21 +75,21 @@ class NotificationHandler {
   var androidSpecificsDueDate = AndroidNotificationDetails(
     "Vikunja1",
     "Due Date Notifications",
-    channelDescription: "description",
+    channelDescription: "描述",
     icon: 'vikunja_notification_logo',
     importance: Importance.high,
     actions: <AndroidNotificationAction>[
-      AndroidNotificationAction(_notificationActionDone, 'Done'),
+      AndroidNotificationAction(_notificationActionDone, '完成'),
     ],
   );
   var androidSpecificsReminders = AndroidNotificationDetails(
     "Vikunja2",
     "Reminder Notifications",
-    channelDescription: "description",
+    channelDescription: "描述",
     icon: 'vikunja_notification_logo',
     importance: Importance.high,
     actions: <AndroidNotificationAction>[
-      AndroidNotificationAction(_notificationActionDone, 'Done'),
+      AndroidNotificationAction(_notificationActionDone, '完成'),
     ],
   );
   late DarwinNotificationDetails iOSSpecifics;
@@ -143,7 +143,7 @@ class NotificationHandler {
         DarwinNotificationCategory(
           'doneCategory',
           actions: <DarwinNotificationAction>[
-            DarwinNotificationAction.plain(_notificationActionDone, 'Done'),
+            DarwinNotificationAction.plain(_notificationActionDone, '完成'),
           ],
         ),
       ],
@@ -241,7 +241,7 @@ class NotificationHandler {
         for (final reminder in task.reminderDates) {
           await scheduleNotification(
             (reminder.reminder.millisecondsSinceEpoch / 1000).floor(),
-            "Reminder",
+            "提醒事项",
             "This is your reminder for '${task.title}'",
             notificationsPlugin,
             reminder.reminder,

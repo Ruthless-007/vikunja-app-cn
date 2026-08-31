@@ -52,7 +52,7 @@ class BucketHeader extends StatelessWidget {
                   : Theme.of(context).textTheme.titleSmall,
             ),
           IconButton(
-            tooltip: 'Add task',
+            tooltip: '添加任务',
             icon: const Icon(Icons.add),
             onPressed: () {
               onAction(HeaderAction.addTask);
@@ -91,7 +91,7 @@ class BucketHeader extends StatelessWidget {
           HeaderAction.collapseColumn,
           Icons.keyboard_double_arrow_up,
         ),
-        buildPopupMenuItem("Delete", HeaderAction.deleteColumn, Icons.delete),
+        buildPopupMenuItem("删除", HeaderAction.deleteColumn, Icons.delete),
       ],
     );
   }

@@ -6,13 +6,13 @@ enum ViewKind {
 
   static ViewKind fromString(String viewKind) {
     switch (viewKind) {
-      case "list":
+      case "列表":
         return list;
-      case "gantt":
+      case "甘特图":
         return gantt;
-      case "table":
+      case "表格":
         return table;
-      case "kanban":
+      case "看板":
         return kanban;
       default:
         throw Error();

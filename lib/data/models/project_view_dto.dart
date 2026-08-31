@@ -38,12 +38,12 @@ class ProjectViewDto extends Dto<ProjectView> {
       defaultBucketId = json['default_bucket_id'],
       doneBucketId = json['done_bucket_id'],
       id = json['id'],
-      filter = json['filter'] != null && json['filter'] is Map<String, dynamic>
-          ? FilterDto.fromJson(json['filter'])
+      filter = json['筛选'] != null && json['筛选'] is Map<String, dynamic>
+          ? FilterDto.fromJson(json['筛选'])
           : null,
       position = json['position'].toDouble(),
       projectId = json['project_id'],
-      title = json['title'],
+      title = json['标题'],
       viewKind = json['view_kind'],
       bucketConfigurationMode = json['bucket_configuration_mode'],
       bucketConfiguration = json['bucket_configuration'] != null
@@ -60,8 +60,8 @@ class ProjectViewDto extends Dto<ProjectView> {
     "id": id,
     "position": position,
     "project_id": projectId,
-    "title": title,
-    "filter": filter?.toJSON() ?? "null",
+    "标题": title,
+    "筛选": filter?.toJSON() ?? "null",
     "bucket_configuration_mode": bucketConfigurationMode,
     "bucket_configuration":
         bucketConfiguration?.map((e) => e.toJSON()).toList() ?? "null",
