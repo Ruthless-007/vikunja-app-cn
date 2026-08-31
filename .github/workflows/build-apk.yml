@@ -26,13 +26,15 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Install dependencies & Gen L10n
+      - name: Install dependencies & Code Generation
         run: |
           flutter pub get
           flutter gen-l10n
+          dart run build_runner build --delete-conflicting-outputs
 
-      - name: Build APK (Release ARM64)
-        run: flutter build apk --release --target-platform android-arm64 --build-name=1.0.0 --build-number=1
+      - name: Build APK (ARM64 Release)
+        run: |
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
