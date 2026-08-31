@@ -192,7 +192,7 @@ class ProjectController extends _$ProjectController with PaginationMixin<Task> {
 
     Map<String, List<String>> queryParams = view == null
         ? {
-            "sort_by": ["完成", "id"],
+            "sort_by": ["done", "id"],
             "order_by": ["asc", "desc"],
             "page": ["$page"],
           }
@@ -204,7 +204,7 @@ class ProjectController extends _$ProjectController with PaginationMixin<Task> {
 
     if (!displayDoneTasks) {
       queryParams.addAll({
-        "筛选": ["done=false"],
+        "filter": ["done=false"],
       });
     }
 

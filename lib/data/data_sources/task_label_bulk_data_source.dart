@@ -13,7 +13,7 @@ class TaskLabelBulkDataSource extends RemoteDataSource {
       body: LabelTaskBulkDto(labels: labels).toJSON(),
       mapper: (body) {
         return convertList(
-          body['标签'],
+          body['labels'],
           (result) => LabelDto.fromJson(result),
         );
       },

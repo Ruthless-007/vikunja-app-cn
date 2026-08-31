@@ -29,7 +29,7 @@ class BucketDto extends Dto<Bucket> {
   BucketDto.fromJSON(Map<String, dynamic> json)
     : id = json['id'],
       projectViewId = json['project_view_id'],
-      title = json['标题'],
+      title = json['title'],
       position = json['position'] is int
           ? json['position'].toDouble()
           : json['position'],
@@ -37,22 +37,22 @@ class BucketDto extends Dto<Bucket> {
       created = DateTime.parse(json['created']),
       updated = DateTime.parse(json['updated']),
       createdBy = UserDto.fromJson(json['created_by']),
-      tasks = json['任务'] == null
+      tasks = json['tasks'] == null
           ? []
-          : (json['任务'] as List<dynamic>)
+          : (json['tasks'] as List<dynamic>)
                 .map((task) => TaskDto.fromJson(task))
                 .toList();
 
   Map<String, Object?> toJSON() => {
     'id': id,
     'project_view_id': projectViewId,
-    '标题': title,
+    'title': title,
     'position': position,
     'limit': limit,
     'created': created.toUtc().toIso8601String(),
     'updated': updated.toUtc().toIso8601String(),
     'created_by': createdBy.toJSON(),
-    '任务': tasks.map((task) => task.toJSON()).toList(),
+    'tasks': tasks.map((task) => task.toJSON()).toList(),
   };
 
   @override

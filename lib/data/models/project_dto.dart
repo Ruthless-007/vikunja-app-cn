@@ -35,8 +35,8 @@ class ProjectDto extends Dto<Project> {
        updated = updated ?? DateTime.now();
 
   ProjectDto.fromJson(Map<String, dynamic> json)
-    : title = json['标题'],
-      description = json['描述'],
+    : title = json['title'],
+      description = json['description'],
       id = json['id'],
       position = json['position'].toDouble(),
       isArchived = json['is_archived'],
@@ -58,9 +58,9 @@ class ProjectDto extends Dto<Project> {
     'id': id,
     'created': created.toUtc().toIso8601String(),
     'updated': updated.toUtc().toIso8601String(),
-    '标题': title,
+    'title': title,
     'owner': owner?.toJSON(),
-    '描述': description,
+    'description': description,
     'parent_project_id': parentProjectId,
     'hex_color': color
         ?.toARGB32()

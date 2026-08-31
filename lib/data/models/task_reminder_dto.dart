@@ -13,14 +13,14 @@ class TaskReminderDto extends Dto<TaskReminder> {
   ]);
 
   TaskReminderDto.fromJson(Map<String, dynamic> json)
-    : reminder = DateTime.parse(json['提醒事项']),
+    : reminder = DateTime.parse(json['reminder']),
       relativePeriod = json['relative_period'],
       relativeTo = json['relative_to'];
 
   Map<String, Object> toJSON() => {
     'relative_period': relativePeriod,
     'relative_to': relativeTo,
-    '提醒事项': reminder.toUtc().toIso8601String(),
+    'reminder': reminder.toUtc().toIso8601String(),
   };
 
   @override

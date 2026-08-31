@@ -6,15 +6,15 @@ class WidgetTask {
 
   WidgetTask({
     this.id = '0',
-    this.title = '无',
+    this.title = 'None',
     this.dueDate,
     this.today = false,
   });
 
   Map<String, Object?> toJSON() => {
     'id': id,
-    '标题': title,
+    'title': title,
     'dueDate': dueDate?.toUtc().toIso8601String(),
-    '今天': today,
+    'today': today,
   };
 }

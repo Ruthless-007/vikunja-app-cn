@@ -24,8 +24,8 @@ class LabelDto extends Dto<Label> {
 
   LabelDto.fromJson(Map<String, dynamic> json)
     : id = json['id'],
-      title = json['标题'],
-      description = json['描述'],
+      title = json['title'],
+      description = json['description'],
       color = json['hex_color'] == ''
           ? null
           : Color(int.parse(json['hex_color'], radix: 16) + 0xFF000000),
@@ -35,8 +35,8 @@ class LabelDto extends Dto<Label> {
 
   Map<String, Object?> toJSON() => {
     'id': id,
-    '标题': title,
-    '描述': description,
+    'title': title,
+    'description': description,
     'hex_color': color
         ?.toARGB32()
         .toRadixString(16)

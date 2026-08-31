@@ -9,12 +9,12 @@ class BucketConfigurationDto extends Dto<BucketConfiguration> {
   BucketConfigurationDto(this.title, this.filter);
 
   BucketConfigurationDto.fromJson(Map<String, dynamic> json)
-    : title = json['标题'],
-      filter = json['筛选'] != null && json['筛选'] is Map<String, dynamic>
-          ? FilterDto.fromJson(json['筛选'])
+    : title = json['title'],
+      filter = json['filter'] != null && json['filter'] is Map<String, dynamic>
+          ? FilterDto.fromJson(json['filter'])
           : null;
 
-  Map<String, dynamic> toJSON() => {'标题': title, '筛选': filter?.toJSON()};
+  Map<String, dynamic> toJSON() => {'title': title, 'filter': filter?.toJSON()};
 
   @override
   BucketConfiguration toDomain() =>
