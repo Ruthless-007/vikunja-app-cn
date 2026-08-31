@@ -24,24 +24,18 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Configure Gradle Memory & Android SDK
-        run: |
-          mkdir -p ~/.gradle
-          echo "org.gradle.jvmargs=-Xmx4096m -XX:MaxMetaspaceSize=1024m -XX:+HeapDumpOnOutOfMemoryError" >> ~/.gradle/gradle.properties
-          echo "android.useAndroidX=true" >> ~/.gradle/gradle.properties
-          echo "android.enableJetifier=true" >> ~/.gradle/gradle.properties
-
-      - name: Install dependencies & Gen L10n
+      - name: Install Dependencies & Generate L10n
         run: |
           flutter pub get
           flutter gen-l10n
 
-      - name: Build APK (Release ARM64)
+      - name: Build Unsigned Release APK
         run: |
-          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons -v
+          # 优先使用官方 unsigned 变体编译，若无变体则回退常规编译
+          flutter build apk --release --flavor unsigned --target-platform android-arm64 --no-tree-shake-icons || \
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
 
-      - name: Upload APK
-        if: always()
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: vikunja-cn-arm64-release
