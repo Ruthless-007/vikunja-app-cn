@@ -18,19 +18,18 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Set up Flutter
+      - name: Set up Flutter (Stable with Dart 3.9+)
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
           channel: 'stable'
           cache: true
 
-      - name: Create Release Keystore & Config
+      - name: Create Release Keystore & Signing Config
         run: |
-          # 自动生成 Release 签名密钥文件
-          keytool -genkeypair -v -keystore android/app/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload -storepass android -keypass android -dname "CN=Vikunja, OU=Dev, O=Selfhost, L=CN, S=CN, C=CN"
-          
-          # 创建 key.properties 供 Gradle 自动载入
+          keytool -genkeypair -v -keystore android/app/upload-keystore.jks \
+            -keyalg RSA -keysize 2048 -validity 10000 -alias upload \
+            -storepass android -keypass android \
+            -dname "CN=Vikunja, OU=Dev, O=Selfhost, L=CN, S=CN, C=CN"
           cat <<EOF > android/key.properties
           storePassword=android
           keyPassword=android
@@ -38,25 +37,26 @@ jobs:
           storeFile=upload-keystore.jks
           EOF
 
-      - name: Configure Gradle Environment
+      - name: Configure Gradle Environment (Anti-Hang)
         run: |
           mkdir -p ~/.gradle
           echo "org.gradle.jvmargs=-Xmx4096m -XX:MaxMetaspaceSize=1024m" >> ~/.gradle/gradle.properties
           echo "org.gradle.vfs.watch=false" >> ~/.gradle/gradle.properties
           echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
 
-      - name: Install dependencies & Generate L10n
+      - name: Install Dependencies & Generate L10n
         run: |
           flutter pub get
           flutter gen-l10n
 
-      - name: Build ARM64 APK
+      - name: Build Android ARM64 APK
         run: |
-          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons --verbose
+          flutter build apk --release --flavor unsigned --target-platform android-arm64 --no-tree-shake-icons || \
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
 
-      - name: Upload APK
-        if: always()
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: vikunja-cn-arm64-release
           path: build/app/outputs/flutter-apk/*.apk
+          if-no-files-found: warn
