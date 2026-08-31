@@ -21,21 +21,41 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.22.2'
           channel: 'stable'
           cache: true
 
-      - name: Install Dependencies & Generate L10n
+      - name: Create Release Keystore & Config
+        run: |
+          # 自动生成 Release 签名密钥文件
+          keytool -genkeypair -v -keystore android/app/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload -storepass android -keypass android -dname "CN=Vikunja, OU=Dev, O=Selfhost, L=CN, S=CN, C=CN"
+          
+          # 创建 key.properties 供 Gradle 自动载入
+          cat <<EOF > android/key.properties
+          storePassword=android
+          keyPassword=android
+          keyAlias=upload
+          storeFile=upload-keystore.jks
+          EOF
+
+      - name: Configure Gradle Environment
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.jvmargs=-Xmx4096m -XX:MaxMetaspaceSize=1024m" >> ~/.gradle/gradle.properties
+          echo "org.gradle.vfs.watch=false" >> ~/.gradle/gradle.properties
+          echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+
+      - name: Install dependencies & Generate L10n
         run: |
           flutter pub get
           flutter gen-l10n
 
-      - name: Build Unsigned Release APK
+      - name: Build ARM64 APK
         run: |
-          # 优先使用官方 unsigned 变体编译，若无变体则回退常规编译
-          flutter build apk --release --flavor unsigned --target-platform android-arm64 --no-tree-shake-icons || \
-          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons --verbose
 
-      - name: Upload APK Artifact
+      - name: Upload APK
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: vikunja-cn-arm64-release
