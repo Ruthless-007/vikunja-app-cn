@@ -1,4 +1,4 @@
-{
+﻿{
   "@@locale": "zh_CN",
   "appTitle": "Vikunja",
   "login": "登录",
@@ -36,7 +36,7 @@
   "search": "搜索",
   "filter": "筛选",
   "sort": "排序",
-  "loading": "正在加载...",
+  "loading": "加载中...",
   "error": "错误",
   "success": "操作成功",
   "refresh": "刷新",
@@ -222,3 +222,4 @@
   "notFound": "请求的资源未找到",
   "unknownError": "发生未知错误"
 }
+
