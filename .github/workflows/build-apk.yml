@@ -11,28 +11,30 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 0
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
-      
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x'
           channel: 'stable'
-          
-      - name: Install Dependencies & Generate L10n
+          cache: true
+
+      - name: Install dependencies & Gen L10n
         run: |
           flutter pub get
           flutter gen-l10n
-          
-      - name: Build APK (ARM64)
-        run: flutter build apk --release --target-platform android-arm64
-        
-      - name: Upload APK Artifact
+
+      - name: Build APK (Release ARM64)
+        run: flutter build apk --release --target-platform android-arm64 --build-name=1.0.0 --build-number=1
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: vikunja-cn-arm64-release
