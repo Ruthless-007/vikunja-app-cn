@@ -24,6 +24,13 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Configure Gradle Memory & Android SDK
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.jvmargs=-Xmx4096m -XX:MaxMetaspaceSize=1024m -XX:+HeapDumpOnOutOfMemoryError" >> ~/.gradle/gradle.properties
+          echo "android.useAndroidX=true" >> ~/.gradle/gradle.properties
+          echo "android.enableJetifier=true" >> ~/.gradle/gradle.properties
+
       - name: Install dependencies & Gen L10n
         run: |
           flutter pub get
@@ -31,10 +38,11 @@ jobs:
 
       - name: Build APK (Release ARM64)
         run: |
-          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons
+          flutter build apk --release --target-platform android-arm64 --no-tree-shake-icons -v
 
       - name: Upload APK
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: vikunja-cn-arm64-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/*.apk
